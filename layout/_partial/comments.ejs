@@ -20,7 +20,7 @@
 <section id="comments" class="comments">
   <% if (type === 'twikoo') { %>
   <div id="twikoo"></div>
-  <script src="https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.min.js"></script>
+  <script src="<%= cdn_module('twikoo', '1', 'dist/twikoo.min.js') %>"></script>
   <script>
     twikoo.init({
       envId: <%- JSON.stringify(cfg.envId) %>,
@@ -30,9 +30,9 @@
   </script>
   <% } else if (type === 'waline') { %>
   <div id="waline"></div>
-  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <link rel="stylesheet" href="<%= cdn_module('@waline/client', 'v3', 'dist/waline.css') %>">
   <script type="module">
-    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    import { init } from '<%= cdn_module('@waline/client', 'v3', 'dist/waline.js') %>';
     init({
       el: '#waline',
       serverURL: <%- JSON.stringify(cfg.serverURL) %>,
@@ -69,8 +69,8 @@
   </script>
   <% } else if (type === 'artalk') { %>
   <div id="artalk-comments"></div>
-  <link rel="stylesheet" href="https://unpkg.com/artalk@2/dist/Artalk.css">
-  <script src="https://unpkg.com/artalk@2/dist/Artalk.js"></script>
+  <link rel="stylesheet" href="<%= cdn_module('artalk', '2', 'dist/Artalk.css') %>">
+  <script src="<%= cdn_module('artalk', '2', 'dist/Artalk.js') %>"></script>
   <script>
     var artalk = new Artalk({
       el: '#artalk-comments',

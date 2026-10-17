@@ -96,8 +96,10 @@ advanced:
     version: ''
     # Path prefix inside the repo/package, e.g. '' or 'public'
     path: ''
-    # Custom CDN base URL, used when type is custom (no trailing slash)
-    url: ''
+    # CDN base URL / mirror, no trailing slash.
+    # Optional for jsdelivr/unpkg (system defaults are used).
+    # Required for custom.
+    baseUrl: ''
 
 # Less
 less:
