@@ -1,0 +1,17 @@
+<% if (links && links.length) { %>
+<div class="friend-links">
+  <div class="friend-list">
+    <% links.forEach(function(item){ %>
+    <a class="friend-card" href="<%= (item.link || '').trim() %>" target="_blank" rel="noopener noreferrer">
+      <img class="friend-avatar" src="<%= item.avatar %>" alt="<%= item.name %>" loading="lazy" onerror="this.onerror=null;this.src='<%- url_for('/img/avatar-placeholder.svg') %>';">
+      <span class="friend-info">
+        <span class="friend-name"><%= item.name %></span>
+        <% if (item.descr) { %>
+        <span class="friend-desc"><%= item.descr %></span>
+        <% } %>
+      </span>
+    </a>
+    <% }) %>
+  </div>
+</div>
+<% } %>

@@ -1,5 +1,8 @@
 <%- partial('_partial/head') %>
-<body>
+<%
+  var showToc = is_post() && page.toc !== false && toc(page.content).trim().length > 0;
+%>
+<body class="<%= showToc ? 'post-page' : '' %>">
   <%- partial('_partial/loading') %>
   <script>setLoadingBarProgress(20)</script> 
   <%- partial('_partial/header', null, {cache: !config.relative_link}) %>

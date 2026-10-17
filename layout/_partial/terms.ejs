@@ -1,0 +1,21 @@
+<article class="post white-box article-type-page">
+  <section class="meta">
+    <h2 class="title">
+      <a href="javascript:void(0)"><%= title %></a>
+    </h2>
+  </section>
+  <section class="article typo">
+    <% if (terms && terms.length) { %>
+    <div class="term-list">
+      <% terms.sort('name').each(function(term){ %>
+      <a class="term-item" href="<%- url_for(term.path) %>">
+        <span class="term-name"><%= term.name %></span>
+        <span class="term-count"><%= term.length %></span>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p class="term-empty">暂无内容。</p>
+    <% } %>
+  </section>
+</article>

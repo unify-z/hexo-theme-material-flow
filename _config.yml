@@ -16,17 +16,6 @@ search:
   # baidu
   baidu_api_id:
 
-# friends link
-links:
-  - name: ClassicOldSong
-    url: https://ccoooss.com
-  - name: Frantic1048
-    url: https://frantic1048.logdown.com/
-  - name: Hclmaster
-    url: https://hclmaster.github.io/
-  - name: WANG Hsü-Tung
-    url: https://whst.github.io/
-
 # navigation menu
 menu:
   - name: Home
@@ -35,9 +24,12 @@ menu:
   - name: Archives
     slug: archives
     url: /archives
-  - name: Gallery
-    slug: gallery
-    url: https://photos.google.com/album/AF1QipNoqKYgspQo5O1YhlFXGCQ7p575KBH3Yxf8WHL4?hl=zh-CN
+  - name: Categories
+    slug: categories
+    url: /categories
+  - name: Friends
+    slug: link
+    url: /link
   - name: About
     slug: about
     url: /about
@@ -45,9 +37,14 @@ menu:
 # widgets
 widgets:
   - about
-  - links
   - categories
   - tagcloud
+
+# Page background image
+# Leave empty to keep the default background color.
+# Supports local paths (/img/bg.jpg) and absolute URLs.
+# Both `background_url` and `background-url` are accepted.
+background_url: ''
 
 # Less
 less:

@@ -16,6 +16,10 @@
 				</ul>
 				<div class='underline'></div>
 			</div>
+			<button class="theme-toggle" type="button" aria-label="切换到深色模式" title="切换到深色模式" aria-pressed="false">
+				<svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+				<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+			</button>
 			<% if (theme.search.enable === true) { %>
 				<div class="m_search">
 					<form name="searchform" class="form u-search-form">
@@ -33,8 +37,8 @@
 		</div>
 		
 		<div class='nav-sub container container--flex'>
-			<a class="logo" class="flat-box" href='javascript:void(0)'>
-				Word of Forks
+			<a class="logo flat-box" href='javascript:void(0)'>
+				<%= config.subtitle || 'Word of Forks' %>
 			</a>
 
 			<ul class='switcher h-list'>

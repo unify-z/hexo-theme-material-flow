@@ -1,1 +1,7 @@
-<%- partial('_partial/article', {post: page, index: false}) %>
+<% if (page.type === 'categories') { %>
+  <%- partial('_partial/terms', {title: page.title || '分类', terms: site.categories}) %>
+<% } else if (page.type === 'tags') { %>
+  <%- partial('_partial/terms', {title: page.title || '标签', terms: site.tags}) %>
+<% } else { %>
+  <%- partial('_partial/article', {post: page, index: false}) %>
+<% } %>

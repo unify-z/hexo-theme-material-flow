@@ -38,7 +38,7 @@
 			.enable-trans();
 			display: block;
 			color: fade(@white,70%);
-			padding: 0 @gap / 2;
+			padding: 0 (@gap / 2);
 			&:hover,&.active{
 				color: @white;
 			}
@@ -83,7 +83,7 @@
 			position: absolute;
 			.enable-trans();
 			right: 0px;
-			top:(@header-height - @search-height)/2;
+			top: ((@header-height - @search-height) / 2);
 		}
 		&.z_search-open{
 			.logo,.switcher{
@@ -116,7 +116,7 @@
 		width: @search-height;
 		line-height: @search-height;
 		top: 0;
-		left: @gap/2;
+		left: (@gap / 2);
 	}
 	.input {
 		display:block;
@@ -151,13 +151,44 @@
 	
 }
 
+.theme-toggle {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	margin-left: 10px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: fade(@white, 12%);
+	color: @white;
+	cursor: pointer;
+	.enable-trans(.2s);
+	&:hover {
+		background: fade(@white, 24%);
+	}
+	svg {
+		display: block;
+		width: 18px;
+		height: 18px;
+	}
+	.icon-sun {
+		display: none;
+	}
+	.icon-moon {
+		display: block;
+	}
+}
+
 .menu-phone{
 	position: fixed;
 	top: 0;
 	right: 0;
 	width: 220px;
 	z-index:9999;
-	padding: @gap/2 0px;
+	padding: (@gap / 2) 0px;
 	line-height: 2 * @gap;
 	background: white;
 	border: 1px solid #e6e7e6;
