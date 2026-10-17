@@ -40,7 +40,7 @@
   <%- favicon_tag(config.favicon) %>
   <%- feed_tag(config.feed.path, {title: config.title}) %>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="theme-color" content="#3367d6" id="theme-color-meta">
+  <meta name="theme-color" content="<%= theme.theme_color || theme['theme-color'] || '#e91e63' %>" id="theme-color-meta">
   <%- open_graph({
     twitter_id: theme.twitter,
     google_plus: theme.google_plus, 

@@ -5,6 +5,7 @@
   var root = document.documentElement;
   var btn = document.querySelector('.theme-toggle');
   var meta = document.getElementById('theme-color-meta');
+  var lightColor = meta ? meta.getAttribute('content') : '#e91e63';
 
   function setLabel(theme) {
     if (!btn) return;
@@ -17,7 +18,7 @@
 
   function apply(theme) {
     root.setAttribute('data-theme', theme);
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#121212' : '#3367d6');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#121212' : lightColor);
     setLabel(theme);
   }
 

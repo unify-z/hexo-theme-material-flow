@@ -43,6 +43,10 @@ widgets:
   - categories
   - tagcloud
 
+# Theme color (default: pink)
+# Both `theme_color` and `theme-color` are accepted.
+theme_color: '#e91e63'
+
 # Page background image
 # Leave empty to keep the default background color.
 # Supports local paths (/img/bg.jpg) and absolute URLs.
