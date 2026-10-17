@@ -69,12 +69,17 @@ hexo.extend.helper.register('cdn_asset', function (path) {
   return this.url_for(path);
 });
 
-hexo.extend.helper.register('cdn_module', function (pkg, version, file) {
+hexo.extend.helper.register('cdn_module', function (pkg, version, file, manualUrl) {
   const cdn = getCdnConfig();
   const type = getType(cdn);
   const cleanPkg = String(pkg || '').replace(/^\/+/, '');
   const cleanFile = String(file || '').replace(/^\/+/, '');
   const suffix = versionSuffix(version);
+
+  // Custom CDN URLs must be supplied explicitly; never concatenate them.
+  if (type === 'custom') {
+    return String(manualUrl || '');
+  }
 
   if (!cleanPkg || !cleanFile) return '';
 
@@ -84,13 +89,6 @@ hexo.extend.helper.register('cdn_module', function (pkg, version, file) {
 
   if (type === 'unpkg') {
     return `${getBase(cdn, type)}/${cleanPkg}${suffix}/${cleanFile}`;
-  }
-
-  if (type === 'custom') {
-    const base = getBase(cdn, type);
-    if (base) {
-      return `${base}/${cleanPkg}${suffix}/${cleanFile}`;
-    }
   }
 
   // External modules always need a CDN, even when theme assets are local.

@@ -62,10 +62,15 @@ comments:
   twikoo:
     envId: ''
     lang: zh-CN
+    # custom CDN: full URL to twikoo.min.js; ignored for jsdelivr/unpkg
+    src: ''
 
   waline:
     serverURL: ''
     lang: zh-CN
+    # custom CDN: full URLs; ignored for jsdelivr/unpkg
+    js: ''
+    css: ''
 
   giscus:
     repo: ''
@@ -82,6 +87,9 @@ comments:
   artalk:
     server: ''
     site: ''
+    # custom CDN: full URLs; ignored for jsdelivr/unpkg
+    js: ''
+    css: ''
 
 # Advanced settings
 advanced:

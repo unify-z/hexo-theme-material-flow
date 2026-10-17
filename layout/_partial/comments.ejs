@@ -2,16 +2,19 @@
   var comments = theme.comments || {};
   var type = (comments.type || '').toLowerCase();
   var cfg = comments[type] || {};
+  var cdnConfig = (theme.advanced && theme.advanced.cdn) || {};
+  var cdnType = String(cdnConfig.type || 'local').toLowerCase();
+  var customCdn = cdnType === 'custom';
   var ready = false;
 
   if (type === 'twikoo') {
-    ready = !!cfg.envId;
+    ready = !!cfg.envId && (!customCdn || !!cfg.src);
   } else if (type === 'waline') {
-    ready = !!cfg.serverURL;
+    ready = !!cfg.serverURL && (!customCdn || (!!cfg.js && !!cfg.css));
   } else if (type === 'giscus') {
     ready = !!(cfg.repo && cfg.repoId && cfg.categoryId);
   } else if (type === 'artalk') {
-    ready = !!cfg.server;
+    ready = !!cfg.server && (!customCdn || (!!cfg.js && !!cfg.css));
   }
 
   var show = type && ready && (post.layout === 'post' ? post.comments !== false : post.comments === true);
@@ -20,7 +23,7 @@
 <section id="comments" class="comments">
   <% if (type === 'twikoo') { %>
   <div id="twikoo"></div>
-  <script src="<%= cdn_module('twikoo', '1', 'dist/twikoo.min.js') %>"></script>
+  <script src="<%= cdn_module('twikoo', '1', 'dist/twikoo.min.js', cfg.src) %>"></script>
   <script>
     twikoo.init({
       envId: <%- JSON.stringify(cfg.envId) %>,
@@ -30,9 +33,9 @@
   </script>
   <% } else if (type === 'waline') { %>
   <div id="waline"></div>
-  <link rel="stylesheet" href="<%= cdn_module('@waline/client', 'v3', 'dist/waline.css') %>">
+  <link rel="stylesheet" href="<%= cdn_module('@waline/client', 'v3', 'dist/waline.css', cfg.css) %>">
   <script type="module">
-    import { init } from '<%= cdn_module('@waline/client', 'v3', 'dist/waline.js') %>';
+    import { init } from '<%= cdn_module('@waline/client', 'v3', 'dist/waline.js', cfg.js) %>';
     init({
       el: '#waline',
       serverURL: <%- JSON.stringify(cfg.serverURL) %>,
@@ -69,8 +72,8 @@
   </script>
   <% } else if (type === 'artalk') { %>
   <div id="artalk-comments"></div>
-  <link rel="stylesheet" href="<%= cdn_module('artalk', '2', 'dist/Artalk.css') %>">
-  <script src="<%= cdn_module('artalk', '2', 'dist/Artalk.js') %>"></script>
+  <link rel="stylesheet" href="<%= cdn_module('artalk', '2', 'dist/Artalk.css', cfg.css) %>">
+  <script src="<%= cdn_module('artalk', '2', 'dist/Artalk.js', cfg.js) %>"></script>
   <script>
     var artalk = new Artalk({
       el: '#artalk-comments',
