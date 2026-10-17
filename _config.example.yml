@@ -1,3 +1,6 @@
+# Copy this file to `_config.yml` and customize it.
+# `_config.yml` is intentionally ignored by git.
+
 # Search
 search: 
   enable: true

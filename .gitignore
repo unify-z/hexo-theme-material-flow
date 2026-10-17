@@ -1,0 +1,10 @@
+# Theme configuration is site-specific; use _config.example.yml as a template.
+_config.yml
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.log
+
+# Dependencies
+node_modules/
