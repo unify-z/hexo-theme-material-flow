@@ -53,6 +53,36 @@ theme_color: '#e91e63'
 # Both `background_url` and `background-url` are accepted.
 background_url: ''
 
+# Comments
+# Only one provider is enabled at a time.
+# type: twikoo | waline | giscus | artalk (leave empty to disable)
+comments:
+  type: ''
+
+  twikoo:
+    envId: ''
+    lang: zh-CN
+
+  waline:
+    serverURL: ''
+    lang: zh-CN
+
+  giscus:
+    repo: ''
+    repoId: ''
+    category: ''
+    categoryId: ''
+    mapping: pathname
+    strict: '0'
+    reactionsEnabled: '1'
+    inputPosition: top
+    lang: zh-CN
+    theme: preferred_color_scheme
+
+  artalk:
+    server: ''
+    site: ''
+
 # Less
 less:
   compress: true

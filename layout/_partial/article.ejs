@@ -45,11 +45,7 @@
 		</div>
 	<%} %>
 	</section>
-	<% if (post.comments && config.disqus_shortname){ %>
-		<section id="comments">
-			<div id="disqus_thread"></div>
-		</section>
-	<% } %>
+	<%- partial('comments', {post: post}) %>
 </article>
 <script>
 	window.subData = {

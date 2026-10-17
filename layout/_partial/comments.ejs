@@ -1,0 +1,88 @@
+<%
+  var comments = theme.comments || {};
+  var type = (comments.type || '').toLowerCase();
+  var cfg = comments[type] || {};
+  var ready = false;
+
+  if (type === 'twikoo') {
+    ready = !!cfg.envId;
+  } else if (type === 'waline') {
+    ready = !!cfg.serverURL;
+  } else if (type === 'giscus') {
+    ready = !!(cfg.repo && cfg.repoId && cfg.categoryId);
+  } else if (type === 'artalk') {
+    ready = !!cfg.server;
+  }
+
+  var show = type && ready && (post.layout === 'post' ? post.comments !== false : post.comments === true);
+%>
+<% if (show) { %>
+<section id="comments" class="comments">
+  <% if (type === 'twikoo') { %>
+  <div id="twikoo"></div>
+  <script src="https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.min.js"></script>
+  <script>
+    twikoo.init({
+      envId: <%- JSON.stringify(cfg.envId) %>,
+      el: '#twikoo',
+      lang: <%- JSON.stringify(cfg.lang || 'zh-CN') %>
+    });
+  </script>
+  <% } else if (type === 'waline') { %>
+  <div id="waline"></div>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: <%- JSON.stringify(cfg.serverURL) %>,
+      lang: <%- JSON.stringify(cfg.lang || 'zh-CN') %>,
+      dark: 'html[data-theme="dark"]'
+    });
+  </script>
+  <% } else if (type === 'giscus') { %>
+  <div class="giscus"></div>
+  <script src="https://giscus.app/client.js"
+    data-repo="<%= cfg.repo %>"
+    data-repo-id="<%= cfg.repoId %>"
+    data-category="<%= cfg.category || '' %>"
+    data-category-id="<%= cfg.categoryId %>"
+    data-mapping="<%= cfg.mapping || 'pathname' %>"
+    data-strict="<%= cfg.strict || '0' %>"
+    data-reactions-enabled="<%= cfg.reactionsEnabled || '1' %>"
+    data-emit-metadata="0"
+    data-input-position="<%= cfg.inputPosition || 'top' %>"
+    data-theme="<%= cfg.theme || 'preferred_color_scheme' %>"
+    data-lang="<%= cfg.lang || 'zh-CN' %>"
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <script>
+    document.addEventListener('themechange', function (e) {
+      var iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe || !iframe.contentWindow) return;
+      iframe.contentWindow.postMessage({
+        giscus: { setConfig: { theme: e.detail.theme } }
+      }, 'https://giscus.app');
+    });
+  </script>
+  <% } else if (type === 'artalk') { %>
+  <div id="artalk-comments"></div>
+  <link rel="stylesheet" href="https://unpkg.com/artalk@2/dist/Artalk.css">
+  <script src="https://unpkg.com/artalk@2/dist/Artalk.js"></script>
+  <script>
+    var artalk = new Artalk({
+      el: '#artalk-comments',
+      server: <%- JSON.stringify(cfg.server) %>,
+      site: <%- JSON.stringify(cfg.site || '') %>,
+      pageKey: location.pathname,
+      darkMode: document.documentElement.getAttribute('data-theme') === 'dark'
+    });
+    document.addEventListener('themechange', function (e) {
+      if (artalk && artalk.setDarkMode) artalk.setDarkMode(e.detail.theme === 'dark');
+    });
+  </script>
+  <% } %>
+</section>
+<% } %>

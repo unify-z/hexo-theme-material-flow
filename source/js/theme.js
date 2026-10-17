@@ -20,6 +20,7 @@
     root.setAttribute('data-theme', theme);
     if (meta) meta.setAttribute('content', theme === 'dark' ? '#121212' : lightColor);
     setLabel(theme);
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: theme } }));
   }
 
   function current() {
