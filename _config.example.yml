@@ -83,6 +83,22 @@ comments:
     server: ''
     site: ''
 
+# Advanced settings
+advanced:
+  cdn:
+    # local | jsdelivr | unpkg | custom
+    type: 'local'
+    # jsDelivr: GitHub repo (user/repo) or npm package
+    # The repo/package should contain the generated public assets.
+    repo: ''
+    package: ''
+    # Branch / tag / version. Required for jsDelivr, optional for unpkg.
+    version: ''
+    # Path prefix inside the repo/package, e.g. '' or 'public'
+    path: ''
+    # Custom CDN base URL, used when type is custom (no trailing slash)
+    url: ''
+
 # Less
 less:
   compress: true
