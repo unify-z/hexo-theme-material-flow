@@ -2,7 +2,7 @@
 <%
   var showToc = is_post() && page.toc !== false && toc(page.content).trim().length > 0;
 %>
-<body class="<%= showToc ? 'post-page' : '' %>">
+<body class="<%= [showToc ? 'post-page' : '', theme.rounded ? 'rounded' : ''].filter(Boolean).join(' ') %>">
   <%- partial('_partial/loading') %>
   <script>setLoadingBarProgress(20)</script> 
   <%- partial('_partial/header', null, {cache: !config.relative_link}) %>
@@ -18,7 +18,6 @@
       <script>setLoadingBarProgress(60);</script>
     </div>
   </div>
-  <%- partial('_partial/footer', null, {cache: !config.relative_link}) %>
   <script>setLoadingBarProgress(80);</script>
   <%- partial('_partial/scripts') %>
   <script>setLoadingBarProgress(100);</script>

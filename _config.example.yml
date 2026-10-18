@@ -43,6 +43,19 @@ widgets:
   - categories
   - tagcloud
 
+# About widget
+about:
+  desc: 'Tempora mutantur, nos et mutamur in illis ...'
+
+# Blogger avatar (empty to use root config.avatar)
+avatar: '/avatar/avatar.png'
+
+# Page icon / favicon (empty to use root config.favicon)
+favicon: '/avatar/favicon-round.png'
+
+# Round the blogger avatar
+rounded: true
+
 # Theme color (default: pink)
 # Both `theme_color` and `theme-color` are accepted.
 theme_color: '#e91e63'

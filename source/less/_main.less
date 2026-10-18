@@ -113,12 +113,37 @@
             time {
                 color: lighten(@grey-color, 20%);
             }
+            .read-count {
+                display: inline-block;
+                margin-left: 8px;
+                font-size: .75rem;
+                color: lighten(@grey-color, 20%);
+            }
+        }
+        .post-excerpt {
+            display: -webkit-box;
+            margin: 10px 0 0;
+            color: @grey-color;
+            font-size: .9rem;
+            line-height: 1.6;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
         .meta-line {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 4px 12px;
+        }
+        .meta-line .comment-count {
+            display: inline-flex;
+            align-items: center;
+            font-size: .75rem;
+            color: lighten(@grey-color, 20%);
+            .icon {
+                margin-right: 4px;
+            }
         }
         .meta-line .tags {
             display: inline-block;
@@ -133,6 +158,7 @@
             }
         }
         .post-cover {
+            position: relative;
             display: block;
             overflow: hidden;
             background: @qoute-background-color;
@@ -147,18 +173,35 @@
                 transform: scale(1.03);
             }
         }
+        .post-category {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 1;
+            max-width: calc(100% - 24px);
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: @white;
+            background: fade(@black, 55%);
+            font-size: .75rem;
+            line-height: 1.4;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+        }
         &.has-cover {
-            padding-bottom: 0;
+            padding-top: 0;
             .meta {
-                margin-bottom: 1.5*@gap;
+                margin-bottom: 0;
             }
             .post-cover {
-                margin: 0 -1.5*@gap;
+                margin: 0 -1.5*@gap @gap;
             }
             @media(max-width: @on-phone) {
                 .post-cover {
-                    margin-left: -@gap;
-                    margin-right: -@gap;
+                    margin: 0 -@gap @gap;
                 }
             }
         }

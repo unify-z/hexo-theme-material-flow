@@ -104,6 +104,11 @@ html[data-theme="dark"] {
     .l_main .post .meta-line .tags a {
         color: @dm-green;
     }
+    .l_main .post .post-excerpt,
+    .l_main .post .meta-line .comment-count,
+    .l_main .post .meta .read-count {
+        color: @dm-muted;
+    }
     .l_main .post .post-cover {
         background: @dm-surface-2;
     }
@@ -257,6 +262,30 @@ html[data-theme="dark"] {
     }
     .m_widget.about .desc {
         background: @dm-surface-2;
+    }
+    .m_widget.about .about-head .waves-effect {
+        border-color: fade(@white, 18%);
+        background: @dm-surface-2;
+    }
+    .m_widget.about .social {
+        color: @dm-text;
+        background: fade(@white, 8%);
+    }
+    .m_widget.about .social:hover {
+        color: @white;
+        background: @dm-accent;
+    }
+    .m_widget.about .social.github:hover {
+        background: @github-color;
+    }
+    .m_widget.about .social.twitter:hover {
+        background: @twitter-color;
+    }
+    .m_widget.about .social.weibo:hover {
+        background: @weibo-color;
+    }
+    .m_widget.about .social.rss:hover {
+        background: @material-orange;
     }
     .m_widget .content a {
         color: @dm-text;

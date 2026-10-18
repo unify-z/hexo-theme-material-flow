@@ -1,9 +1,28 @@
+<%
+  var about = theme.about || {};
+  var aboutDesc = about.desc !== undefined ? about.desc : 'Tempora mutantur, nos et mutamur in illis ...';
+  var avatar = theme.avatar || config.avatar;
+  var socials = (theme.social || []).filter(function (item) {
+    return item && item.url && item.slug;
+  });
+%>
 <section class='m_widget about'>
-<% if(config.avatar) { %>
-<img class='avatar waves-image' src='<%= url_for(config.avatar) %>' />
+<div class='about-head'>
+<% if(avatar) { %>
+<img class='avatar waves-image' src='<%= url_for(avatar) %>' alt='<%= config.author %>' />
 <%} %>
 <div class='header'><%=config.author %></div>
+</div>
 <div class='content'>
-<div class='desc'>Tempora mutantur, nos et mutamur in illis ...</div>
+<div class='desc'><%= aboutDesc %></div>
+<% if (socials.length) { %>
+<div class='social-links'>
+  <% socials.forEach(function (item) { %>
+  <a href="<%= item.url %>" class="social <%= item.slug %>" target="_blank" rel="external" title="<%= item.slug %>">
+    <span class="icon icon-<%= item.slug %>"></span>
+  </a>
+  <% }); %>
+</div>
+<% } %>
 </div>
 </section>

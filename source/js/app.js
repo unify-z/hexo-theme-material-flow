@@ -126,6 +126,10 @@ var customSearch;
 	function setScrollReveal() {
 		const $reveal = $('.reveal');
 		if ($reveal.length === 0) return;
+		if (typeof ScrollReveal === 'undefined') {
+			$reveal.css('visibility', 'visible');
+			return;
+		}
 		const sr = ScrollReveal({ distance: 0 });
 		sr.reveal('.reveal');
 	}

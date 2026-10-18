@@ -47,6 +47,39 @@
         width: 100%;
         display: block;
     }
+    .about-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: @gap;
+        .waves-effect {
+            flex: none;
+            width: 44px;
+            height: 44px;
+            overflow: hidden;
+            border: 2px solid fade(@black, 10%);
+            border-radius: 0;
+            background: @white;
+        }
+        .avatar {
+            flex: none;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            object-fit: cover;
+            border-radius: 0;
+        }
+        .header {
+            flex: 1;
+            min-width: 0;
+            padding: 0;
+            font-size: 1.1rem;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
     @media(max-width: @on-phone){
         display:none;
     }
@@ -75,6 +108,10 @@
         }
     }
 }
+.rounded .m_widget.about .about-head .avatar,
+.rounded .m_widget.about .about-head .waves-effect {
+    border-radius: 50%;
+}
 .m_widget.tagcloud{
     .content{
         padding: 10px 20px;
@@ -86,6 +123,46 @@
                 color: @accent-color !important; //to cover inline style.
                 text-decoration: underline
             }
+        }
+    }
+}
+
+.m_widget.about {
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px @gap @gap;
+    }
+    .social {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        color: @grey-color;
+        background: fade(@black, 5%);
+        font-size: 16px;
+        transition: all .2s ease-out;
+        .icon {
+            line-height: 1;
+        }
+        &:hover {
+            color: @white;
+            background: @accent-color;
+        }
+        &.github:hover {
+            background: @github-color;
+        }
+        &.twitter:hover {
+            background: @twitter-color;
+        }
+        &.weibo:hover {
+            background: @weibo-color;
+        }
+        &.rss:hover {
+            background: @material-orange;
         }
     }
 }

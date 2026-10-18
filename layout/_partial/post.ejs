@@ -1,4 +1,17 @@
-<article class="post reveal<%= (post.title) ? "" : " no-title" %><%= post.cover ? " has-cover" : "" %>">
+<%
+  var category = (post.categories && post.categories.length) ? post.categories.data[0] : null;
+  var excerptSource = post.excerpt || post.description || post.content || '';
+  var excerptText = truncate(strip_html(excerptSource).replace(/\s+/g, ' ').trim(), { length: 100 });
+%>
+<article class="post<%= (post.title) ? "" : " no-title" %><%= post.cover ? " has-cover" : "" %>">
+  <% if (post.cover) { %>
+  <a class="post-cover" href="<%- url_for(post.path) %>" aria-hidden="true" tabindex="-1">
+    <img src="<%= post.cover %>" alt="<%= post.title %>" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/bg.jpg';">
+    <% if (category) { %>
+    <span class="post-category"><%= category.name %></span>
+    <% } %>
+  </a>
+  <% } %>
   <section class="meta">
     <% if (post.title) { %>
     <h2 class="title">
@@ -7,21 +20,24 @@
       </a>
     </h2>
     <% } %>
+    <% if (excerptText) { %>
+    <p class="post-excerpt"><%= excerptText %></p>
+    <% } %>
     <div class="meta-line">
       <% if (post.tags && post.tags.length) { %>
       <span class="tags">
         <% post.tags.each(function(item){ %><a href="<%- url_for(item.path) %>">#<%= item.name %></a><% }) %>
       </span>
       <% } %>
+      <% if (!post.cover) { %>
       <%- partial('categories',{post:post}) %>
+      <% } %>
+      <span class="comment-count" data-path="<%- url_for(post.path) %>">
+        <span class="icon icon-chat_bubble_outline"></span><span class="count">0</span>
+      </span>
       <time>
         <%= date(post.date, 'YYYY-MM-DD') %>
       </time>
     </div>
   </section>
-  <% if (post.cover) { %>
-  <a class="post-cover" href="<%- url_for(post.path) %>" aria-hidden="true" tabindex="-1">
-    <img src="<%= post.cover %>" alt="<%= post.title %>" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='/img/bg.jpg';">
-  </a>
-  <% } %>
 </article>

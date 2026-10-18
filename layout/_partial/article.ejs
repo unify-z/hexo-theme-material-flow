@@ -11,6 +11,9 @@
 	  <%= date(post.date, 'MMM D, YYYY') %>
 	</time>
 	<%- partial('categories',{post:post}) %>
+	<% if (post.layout === 'post') { %>
+	<span id="busuanzi_container_page_pv" class="read-count" style="display:none">阅读 <span id="busuanzi_value_page_pv"></span></span>
+	<% } %>
 	</section>
 	<% if(post.toc!==false){ %>
 		<section class="toc-wrapper"><%- toc(post.content) %></section>
