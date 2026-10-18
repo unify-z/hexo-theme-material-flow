@@ -23,13 +23,55 @@
 <section id="comments" class="comments">
   <% if (type === 'twikoo') { %>
   <div id="twikoo"></div>
-  <script src="<%= cdn_module('twikoo', '1', 'dist/twikoo.min.js', cfg.src) %>"></script>
   <script>
-    twikoo.init({
-      envId: <%- JSON.stringify(cfg.envId) %>,
-      el: '#twikoo',
-      lang: <%- JSON.stringify(cfg.lang || 'zh-CN') %>
-    });
+    (function () {
+      var src = <%- JSON.stringify(cdn_module('twikoo', '1', 'dist/twikoo.min.js', cfg.src)) %>;
+
+      function isTwikooReady() {
+        // `id="twikoo"` also creates `window.twikoo` (the DOM element), so a
+        // truthy check is not enough before the library has loaded.
+        return !!(window.twikoo && typeof window.twikoo.init === 'function');
+      }
+
+      function init() {
+        var el = document.getElementById('twikoo');
+        if (!isTwikooReady() || !el || el.getAttribute('data-twikoo-ready')) return;
+        el.setAttribute('data-twikoo-ready', '1');
+        window.twikoo.init({
+          envId: <%- JSON.stringify(cfg.envId) %>,
+          el: '#twikoo',
+          lang: <%- JSON.stringify(cfg.lang || 'zh-CN') %>
+        });
+      }
+
+      function load() {
+        if (isTwikooReady()) {
+          init();
+          return;
+        }
+
+        var existing = document.querySelector('script[data-twikoo]');
+        if (existing) {
+          existing.addEventListener('load', init);
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.src = src;
+        script.setAttribute('data-twikoo', '');
+        script.addEventListener('load', init);
+        document.head.appendChild(script);
+      }
+
+      if (window.materialFlowPjax && document.readyState !== 'loading') {
+        document.addEventListener('pjax:success', function onSuccess() {
+          document.removeEventListener('pjax:success', onSuccess);
+          load();
+        });
+      } else {
+        load();
+      }
+    })();
   </script>
   <% } else if (type === 'waline') { %>
   <div id="waline"></div>
@@ -45,46 +87,122 @@
   </script>
   <% } else if (type === 'giscus') { %>
   <div class="giscus"></div>
-  <script src="https://giscus.app/client.js"
-    data-repo="<%= cfg.repo %>"
-    data-repo-id="<%= cfg.repoId %>"
-    data-category="<%= cfg.category || '' %>"
-    data-category-id="<%= cfg.categoryId %>"
-    data-mapping="<%= cfg.mapping || 'pathname' %>"
-    data-strict="<%= cfg.strict || '0' %>"
-    data-reactions-enabled="<%= cfg.reactionsEnabled || '1' %>"
-    data-emit-metadata="0"
-    data-input-position="<%= cfg.inputPosition || 'top' %>"
-    data-theme="<%= cfg.theme || 'preferred_color_scheme' %>"
-    data-lang="<%= cfg.lang || 'zh-CN' %>"
-    data-loading="lazy"
-    crossorigin="anonymous"
-    async>
+  <script>
+    (function () {
+      function init() {
+        // Build the script dynamically so PJAX can re-create it with all
+        // required `data-*` attributes after a page transition.
+        var script = document.createElement('script');
+        script.src = 'https://giscus.app/client.js';
+        script.async = true;
+        script.crossOrigin = 'anonymous';
+        script.setAttribute('data-repo', <%- JSON.stringify(cfg.repo) %>);
+        script.setAttribute('data-repo-id', <%- JSON.stringify(cfg.repoId) %>);
+        script.setAttribute('data-category', <%- JSON.stringify(cfg.category || '') %>);
+        script.setAttribute('data-category-id', <%- JSON.stringify(cfg.categoryId) %>);
+        script.setAttribute('data-mapping', <%- JSON.stringify(cfg.mapping || 'pathname') %>);
+        script.setAttribute('data-strict', <%- JSON.stringify(cfg.strict || '0') %>);
+        script.setAttribute('data-reactions-enabled', <%- JSON.stringify(cfg.reactionsEnabled || '1') %>);
+        script.setAttribute('data-emit-metadata', '0');
+        script.setAttribute('data-input-position', <%- JSON.stringify(cfg.inputPosition || 'top') %>);
+        script.setAttribute('data-lang', <%- JSON.stringify(cfg.lang || 'zh-CN') %>);
+        script.setAttribute('data-loading', 'lazy');
+
+        var theme = <%- JSON.stringify(cfg.theme || 'preferred_color_scheme') %>;
+        if (theme === 'preferred_color_scheme') {
+          theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        }
+        script.setAttribute('data-theme', theme);
+
+        var current = document.currentScript;
+        var parent = (current && current.parentNode) || document.querySelector('.giscus').parentNode;
+        parent.appendChild(script);
+      }
+
+      if (window.materialFlowPjax && document.readyState !== 'loading') {
+        // Initialize after PJAX has pushed the new URL into history.
+        document.addEventListener('pjax:success', function onSuccess() {
+          document.removeEventListener('pjax:success', onSuccess);
+          init();
+        });
+      } else {
+        init();
+      }
+    })();
   </script>
   <script>
-    document.addEventListener('themechange', function (e) {
-      var iframe = document.querySelector('iframe.giscus-frame');
-      if (!iframe || !iframe.contentWindow) return;
-      iframe.contentWindow.postMessage({
-        giscus: { setConfig: { theme: e.detail.theme } }
-      }, 'https://giscus.app');
-    });
+    if (!window.__giscusThemeListener) {
+      window.__giscusThemeListener = true;
+      document.addEventListener('themechange', function (e) {
+        var iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe || !iframe.contentWindow) return;
+        iframe.contentWindow.postMessage({
+          giscus: { setConfig: { theme: e.detail.theme } }
+        }, 'https://giscus.app');
+      });
+    }
   </script>
   <% } else if (type === 'artalk') { %>
   <div id="artalk-comments"></div>
   <link rel="stylesheet" href="<%= cdn_module('artalk', '2', 'dist/Artalk.css', cfg.css) %>">
-  <script src="<%= cdn_module('artalk', '2', 'dist/Artalk.js', cfg.js) %>"></script>
   <script>
-    var artalk = new Artalk({
-      el: '#artalk-comments',
-      server: <%- JSON.stringify(cfg.server) %>,
-      site: <%- JSON.stringify(cfg.site || '') %>,
-      pageKey: location.pathname,
-      darkMode: document.documentElement.getAttribute('data-theme') === 'dark'
-    });
-    document.addEventListener('themechange', function (e) {
-      if (artalk && artalk.setDarkMode) artalk.setDarkMode(e.detail.theme === 'dark');
-    });
+    (function () {
+      var src = <%- JSON.stringify(cdn_module('artalk', '2', 'dist/Artalk.js', cfg.js)) %>;
+
+      function isArtalkReady() {
+        return typeof window.Artalk === 'function';
+      }
+
+      function init() {
+        var el = document.getElementById('artalk-comments');
+        if (!isArtalkReady() || !el || el.getAttribute('data-artalk-ready')) return;
+        el.setAttribute('data-artalk-ready', '1');
+        window.artalk = new window.Artalk({
+          el: '#artalk-comments',
+          server: <%- JSON.stringify(cfg.server) %>,
+          site: <%- JSON.stringify(cfg.site || '') %>,
+          pageKey: location.pathname,
+          darkMode: document.documentElement.getAttribute('data-theme') === 'dark'
+        });
+      }
+
+      function load() {
+        if (isArtalkReady()) {
+          init();
+          return;
+        }
+
+        var existing = document.querySelector('script[data-artalk]');
+        if (existing) {
+          existing.addEventListener('load', init);
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.src = src;
+        script.setAttribute('data-artalk', '');
+        script.addEventListener('load', init);
+        document.head.appendChild(script);
+      }
+
+      if (window.materialFlowPjax && document.readyState !== 'loading') {
+        document.addEventListener('pjax:success', function onSuccess() {
+          document.removeEventListener('pjax:success', onSuccess);
+          load();
+        });
+      } else {
+        load();
+      }
+
+      if (!window.__artalkThemeListener) {
+        window.__artalkThemeListener = true;
+        document.addEventListener('themechange', function (e) {
+          if (window.artalk && window.artalk.setDarkMode) {
+            window.artalk.setDarkMode(e.detail.theme === 'dark');
+          }
+        });
+      }
+    })();
   </script>
   <% } %>
 </section>

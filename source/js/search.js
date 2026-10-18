@@ -75,6 +75,9 @@ var SearchService = "";
       self.dom.modal_body.scrollTop(0);
       self.dom.modal_ajax_content.addClass('loaded');
       self.stopLoading();
+      if (typeof CustomEvent === 'function') {
+        document.dispatchEvent(new CustomEvent('material-flow:search-results'));
+      }
     };
 
     /**

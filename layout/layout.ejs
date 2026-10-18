@@ -7,7 +7,7 @@
   <script>setLoadingBarProgress(20)</script> 
   <%- partial('_partial/header', null, {cache: !config.relative_link}) %>
     <script>setLoadingBarProgress(40);</script>
-  <div class="l_body">
+  <div class="l_body" id="pjax-container">
     <div class='container clearfix'>
       <div class='l_main'>
         <%- body %>

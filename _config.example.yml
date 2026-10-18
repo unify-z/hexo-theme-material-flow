@@ -122,6 +122,20 @@ advanced:
     # Required for custom.
     baseUrl: ''
 
+# PJAX
+# Navigate between pages without a full page reload.
+pjax:
+  # Set to false to disable PJAX.
+  enable: true
+  # PJAX script URL.
+  # Leave empty to generate it from `advanced.cdn.type`:
+  #   local    -> /js/pjax.min.js (bundled with the theme)
+  #   jsdelivr -> https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js
+  #   unpkg    -> https://unpkg.com/pjax@0.2.8/pjax.min.js
+  #   custom   -> REQUIRED; no URL can be generated automatically
+  # Set a full URL here to override the generated value.
+  script: ''
+
 # Less
 less:
   compress: true

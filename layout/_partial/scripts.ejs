@@ -37,6 +37,10 @@ window.__COMMENT_COUNT_CONFIG__ = {
 };
 </script>
 <script src="<%= cdn_asset('js/comment-count.js') %>"></script>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async data-busuanzi src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script src="<%= cdn_asset('js/app.js') %>"></script>
+<% if (pjax_enabled()) { %>
+<script src="<%= pjax_script() %>"></script>
+<script src="<%= cdn_asset('js/pjax-init.js') %>"></script>
+<% } %>
 

@@ -31,5 +31,29 @@ Here are some examples:
 1. [_config.yml](https://github.com/stkevintan/hexo/blob/master/_config.yml)  
 2. [themes/material-flow/_config.yml](https://github.com/stkevintan/hexo/blob/master/themes/material-flow/_config.yml)  
 
+## PJAX
+
+PJAX navigation is configured in `themes/material-flow/_config.yml`:
+
+```yaml
+pjax:
+  enable: true
+  # Leave empty to generate the URL from advanced.cdn.type.
+  script: ''
+```
+
+When `script` is empty the theme generates the PJAX script URL from
+`advanced.cdn.type`:
+
+| `advanced.cdn.type` | Generated script |
+| --- | --- |
+| `local` | `/js/pjax.min.js` (bundled with the theme) |
+| `jsdelivr` | `https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js` |
+| `unpkg` | `https://unpkg.com/pjax@0.2.8/pjax.min.js` |
+| `custom` | **Required**; set `pjax.script` explicitly |
+
+Add `data-no-pjax` to a link to keep its default full-page navigation
+behavior.
+
 ## More 
 Please refer to offical doc : <https://hexo.io/docs/index.html>
